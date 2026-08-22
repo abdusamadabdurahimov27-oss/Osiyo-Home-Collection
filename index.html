@@ -620,26 +620,28 @@ function OHC_Sozlamalar({user, theme, onThemeChange, onSettingsSaved}){
       p.default.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}},
         p.default.createElement("div",{style:{fontWeight:700}},"Xodimlar ro'yxati"),
       ),
-      p.default.createElement("table",{style:{width:"100%",borderCollapse:"collapse",marginBottom:12}},
+      p.default.createElement("div",{style:{overflowX:"auto",WebkitOverflowScrolling:"touch",marginBottom:12}},
+      p.default.createElement("table",{style:{width:"100%",minWidth:540,borderCollapse:"collapse"}},
         p.default.createElement("thead",null,p.default.createElement("tr",null,
-          p.default.createElement("th",{style:{textAlign:"left",fontSize:12,color:"var(--ink3)",padding:"6px 4px"}},"ISM"),
-          p.default.createElement("th",{style:{textAlign:"left",fontSize:12,color:"var(--ink3)",padding:"6px 4px"}},"LOGIN"),
-          p.default.createElement("th",{style:{textAlign:"left",fontSize:12,color:"var(--ink3)",padding:"6px 4px"}},"PAROL"),
-          p.default.createElement("th",{style:{textAlign:"left",fontSize:12,color:"var(--ink3)",padding:"6px 4px"}},"ROL"),
+          p.default.createElement("th",{style:{textAlign:"left",fontSize:11,color:"var(--ink3)",padding:"6px 8px",whiteSpace:"nowrap"}},"ISM"),
+          p.default.createElement("th",{style:{textAlign:"left",fontSize:11,color:"var(--ink3)",padding:"6px 8px",whiteSpace:"nowrap"}},"LOGIN"),
+          p.default.createElement("th",{style:{textAlign:"left",fontSize:11,color:"var(--ink3)",padding:"6px 8px",whiteSpace:"nowrap"}},"PAROL"),
+          p.default.createElement("th",{style:{textAlign:"left",fontSize:11,color:"var(--ink3)",padding:"6px 8px",whiteSpace:"nowrap"}},"ROL"),
           p.default.createElement("th",null)
         )),
         p.default.createElement("tbody",null,
           staff.map(s=>p.default.createElement("tr",{key:s.row,style:{borderTop:"1px solid var(--line)"}},
-            p.default.createElement("td",{style:{padding:"8px 4px"}},s.name),
-            p.default.createElement("td",{style:{padding:"8px 4px"}},s.login),
-            p.default.createElement("td",{style:{padding:"8px 4px"}},s.pass),
-            p.default.createElement("td",{style:{padding:"8px 4px"}},s.role==="admin"?"Bosh admin":"Xodim"),
-            p.default.createElement("td",{style:{padding:"8px 4px",textAlign:"right"}},
+            p.default.createElement("td",{style:{padding:"8px 8px",fontSize:13,whiteSpace:"nowrap"}},s.name),
+            p.default.createElement("td",{style:{padding:"8px 8px",fontSize:13,whiteSpace:"nowrap"}},s.login),
+            p.default.createElement("td",{style:{padding:"8px 8px",fontSize:13,whiteSpace:"nowrap"}},s.pass),
+            p.default.createElement("td",{style:{padding:"8px 8px",fontSize:13,whiteSpace:"nowrap"}},s.role==="admin"?"Bosh admin":"Xodim"),
+            p.default.createElement("td",{style:{padding:"8px 8px",textAlign:"right"}},
               p.default.createElement("button",{className:"iconbtn",title:"O'chirish",onClick:()=>removeStaff(s.row,s.name),disabled:saving==="del"+s.row},"\u2715")
             )
           ))
         )
-      ),
+      )
+    ),
       p.default.createElement("div",{className:"linecard"},
         p.default.createElement("div",{style:{fontSize:13,fontWeight:700,marginBottom:8}},"+ Xodim qo'shish"),
         p.default.createElement("div",{className:"grid g2",style:{marginBottom:8}},
@@ -661,20 +663,22 @@ function OHC_Sozlamalar({user, theme, onThemeChange, onSettingsSaved}){
     p.default.createElement("div",{className:"card",style:{padding:16,marginBottom:16}},
       p.default.createElement("div",{style:{fontWeight:700,marginBottom:4}},"\uD83D\uDC41\uFE0F Bo'limlar ko'rinishi"),
       p.default.createElement("div",{className:"note",style:{marginBottom:10}},"Har bir bo'limni admin va xodimlar uchun alohida yoqish/o'chirish mumkin"),
-      p.default.createElement("table",{style:{width:"100%",borderCollapse:"collapse",marginBottom:12}},
+      p.default.createElement("div",{style:{overflowX:"auto",WebkitOverflowScrolling:"touch",marginBottom:12}},
+      p.default.createElement("table",{style:{width:"100%",minWidth:420,borderCollapse:"collapse"}},
         p.default.createElement("thead",null,p.default.createElement("tr",null,
-          p.default.createElement("th",{style:{textAlign:"left",fontSize:12,color:"var(--ink3)",padding:"6px 4px"}},"BO'LIM"),
-          p.default.createElement("th",{style:{fontSize:12,color:"var(--ink3)",padding:"6px 4px"}},"BOSH ADMIN"),
-          p.default.createElement("th",{style:{fontSize:12,color:"var(--ink3)",padding:"6px 4px"}},"XODIM")
+          p.default.createElement("th",{style:{textAlign:"left",fontSize:11,color:"var(--ink3)",padding:"6px 8px",whiteSpace:"nowrap"}},"BO'LIM"),
+          p.default.createElement("th",{style:{fontSize:11,color:"var(--ink3)",padding:"6px 8px",whiteSpace:"nowrap"}},"BOSH ADMIN"),
+          p.default.createElement("th",{style:{fontSize:11,color:"var(--ink3)",padding:"6px 8px",whiteSpace:"nowrap"}},"XODIM")
         )),
         p.default.createElement("tbody",null,
           OHC_SECTIONS.map(s=>p.default.createElement("tr",{key:s.k,style:{borderTop:"1px solid var(--line)"}},
-            p.default.createElement("td",{style:{padding:"8px 4px"}},s.emoji+" "+s.label),
+            p.default.createElement("td",{style:{padding:"8px 8px",fontSize:13,whiteSpace:"nowrap"}},s.emoji+" "+s.label),
             p.default.createElement("td",{style:{textAlign:"center"}},p.default.createElement("input",{type:"checkbox",checked:!!visibility[s.k].admin,onChange:()=>toggleVis(s.k,"admin")})),
             p.default.createElement("td",{style:{textAlign:"center"}},p.default.createElement("input",{type:"checkbox",checked:!!visibility[s.k].stock,onChange:()=>toggleVis(s.k,"stock")}))
           ))
         )
-      ),
+      )
+    ),
       p.default.createElement("button",{className:"btn",onClick:saveVisibility,disabled:saving==="visibility"},saving==="visibility"?"...":"Saqlash")
     ),
 
