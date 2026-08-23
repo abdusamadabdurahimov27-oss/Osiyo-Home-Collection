@@ -344,19 +344,28 @@ function OHC_ScannerModal({ombor,dokon,onClose}){
 
   let stopCamera=()=>{ if(stopRef.current){ stopRef.current(); stopRef.current=null; } setCameraOn(!1); };
 
-  let startCamera=async()=>{
+  let startCamera=()=>{
     setCameraErr(""); setNotFound(!1);
     if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
       setCameraErr("Bu qurilma/brauzer kameraga kirishni qo'llab-quvvatlamaydi. Pastdan qo'lda kiriting.");
       return;
     }
     setCameraOn(!0);
-    let stop=await ohcStartCameraScan(videoRef.current,canvasRef.current,
-      raw=>{ setManualVal(raw); doSearch(raw); setCameraOn(!1); },
-      er=>{ setCameraErr("Kameraga ruxsat berilmadi yoki xato: "+(er&&er.message?er.message:er)); setCameraOn(!1); }
-    );
-    stopRef.current=stop;
   };
+
+  (0,p.useEffect)(()=>{
+    if(!cameraOn) return;
+    let cancelled=!1;
+    (async()=>{
+      let stop=await ohcStartCameraScan(videoRef.current,canvasRef.current,
+        raw=>{ if(cancelled)return; setManualVal(raw); doSearch(raw); setCameraOn(!1); },
+        er=>{ if(cancelled)return; setCameraErr("Kameraga ruxsat berilmadi yoki xato: "+(er&&er.message?er.message:er)); setCameraOn(!1); }
+      );
+      if(cancelled){ if(stop) stop(); return; }
+      stopRef.current=stop;
+    })();
+    return ()=>{ cancelled=!0; if(stopRef.current){ stopRef.current(); stopRef.current=null; } };
+  },[cameraOn]);
 
   (0,p.useEffect)(()=>()=>{ if(stopRef.current) stopRef.current(); },[]);
 
