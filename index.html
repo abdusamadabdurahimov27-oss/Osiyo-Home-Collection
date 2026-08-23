@@ -85,10 +85,15 @@ function ohcPrintBarcode(model,rang,priceText){
     "<svg id='bc'></svg>"+
     "<div class='label'>"+esc(model)+" \u2014 "+esc(rang)+"</div>"+
     priceLine+
-    "<script src='https://cdnjs.cloudflare.com/ajax/libs/JsBarcode/3.11.5/JsBarcode.all.min.js'><\/script>"+
-    "<script>try{JsBarcode('#bc','"+value.replace(/'/g,"")+"',{format:'"+settings.format+"',width:2,height:70,fontSize:14,margin:8});}catch(e){document.body.innerHTML+='<p style=\"color:red\">Barkod chizishda xato: '+e.message+'</p>';}<\/script>"+
     "</body></html>";
   h.document.open();h.document.write(html);h.document.close();
+  try{
+    if(typeof JsBarcode==="undefined") throw new Error("JsBarcode kutubxonasi yuklanmagan");
+    let svgEl=h.document.getElementById("bc");
+    JsBarcode(svgEl,value,{format:settings.format,width:2,height:70,fontSize:14,margin:8});
+  }catch(e){
+    try{h.document.body.innerHTML+="<p style='color:red'>Barkod chizishda xato: "+esc(e.message)+"</p>";}catch(e2){}
+  }
 }
 function dX(e){return"<!doctype html><html><head><meta charset='utf-8'><title>Chek</title><style>body{font-family:'Courier New',monospace;font-size:19px;font-weight:700;line-height:1.55;white-space:pre-wrap;padding:12px;max-width:340px;margin:0 auto;color:#000;}.pbtn{display:block;width:100%;padding:13px;font-size:15px;font-weight:bold;background:#54206F;color:#fff;border:none;border-radius:8px;margin-bottom:14px;cursor:pointer;}@media print{.pbtn{display:none;}body{padding:0;font-size:20px;font-weight:800;-webkit-print-color-adjust:exact;print-color-adjust:exact;}}</style></head><body><button class='pbtn' onclick='window.print()'>\u{1F5A8} CHOP ETISH</button>"+String(e||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")+"</body></html>"}
 // ===== Placeholder-resolvers (reuse app's existing xe/bv/cr formatters when integrated) =====
